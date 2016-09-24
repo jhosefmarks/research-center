@@ -1,0 +1,11 @@
+# Dependency directory
+node_modules/
+dist/
+
+# other
+.tmp
+
+# files
+.brackets.json
+npm-debug.log
+.DS_STORE

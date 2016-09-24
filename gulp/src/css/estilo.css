@@ -1,0 +1,19 @@
+.busca,
+.menu-departamentos {
+  background-color: #dcdcdc;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-right: 10px;
+  width: 230px;
+}
+.menu-departamentos ul li ul li {
+  background-color: #dcdcdc;
+}
+.painel h2 {
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+.painel button {
+  /* código omitido */
+  text-shadow: 1px 0 1px black;
+  transition: 0.3s;
+}
