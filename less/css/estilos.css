@@ -103,6 +103,12 @@ header .container {
 .sobre {
   background: #ebebeb;
 }
+.sobre p {
+  font: 0.9em/1.8 sans-serif;
+}
+.sobre p:first-child {
+  margin-bottom: 3em;
+}
 .duas-colunas {
   -webkit-column-count: 2;
   -moz-column-count: 2;
@@ -111,12 +117,6 @@ header .container {
 }
 .duas-colunas h3 {
   margin: 0;
-}
-.sobre p {
-  font: 0.9em/1.8 sans-serif;
-}
-.sobre p:first-child {
-  margin-bottom: 3em;
 }
 .plataformas {
   padding: 0;
@@ -174,6 +174,19 @@ header .container {
   color: #c24e4b;
   font-size: 2.75em;
 }
+.plano button {
+  background: #c24e4b;
+  border: 0;
+  color: #fff;
+  width: 210px;
+  height: 38px;
+  font-size: 1.2em;
+  -webkit-border-radius: 0.3em;
+  -o-webkit-border-radius: 0.3em;
+  border-radius: 0.3em;
+  box-shadow: 0 2px 6.65px 0.35px rgba(0, 0, 0, 0.3);
+  margin-left: 2em;
+}
 .itens-plano {
   padding-left: 1.2em;
 }
@@ -189,19 +202,6 @@ header .container {
 }
 .itens-plano span {
   float: right;
-}
-.plano button {
-  background: #c24e4b;
-  border: 0;
-  color: #fff;
-  width: 210px;
-  height: 38px;
-  font-size: 1.2em;
-  -webkit-border-radius: 0.3em;
-  -o-webkit-border-radius: 0.3em;
-  border-radius: 0.3em;
-  box-shadow: 0 2px 6.65px 0.35px rgba(0, 0, 0, 0.3);
-  margin-left: 2em;
 }
 .icone-check,
 .icone-x {
@@ -292,6 +292,10 @@ footer {
   display: block;
   position: relative;
 }
+footer a {
+  color: #fff;
+  text-decoration: none;
+}
 footer::after {
   content: "";
   background: url(../imagens/fundo-rodape.png);
@@ -325,25 +329,17 @@ footer .container img {
 .social {
   position: absolute;
 }
-.menu-rodape ul li {
-  display: inline-block;
-  margin-left: 2em;
-}
 .menu-rodape {
   top: 1em;
   right: 0;
 }
+.menu-rodape ul li {
+  display: inline-block;
+  margin-left: 2em;
+}
 .social {
   bottom: 0;
   right: 0;
-}
-.menu-rodape li,
-.social li {
-  display: inline;
-}
-footer a {
-  color: #fff;
-  text-decoration: none;
 }
 .social li {
   float: left;
@@ -369,4 +365,8 @@ footer a {
 }
 .social a[href*="instagram"] {
   background-image: url(../imagens/instagram.png);
+}
+.menu-rodape li,
+.social li {
+  display: inline;
 }
