@@ -1,0 +1,16 @@
+{
+  "standard.options":{
+    "globals": [
+      "describe",
+      "xdescribe",
+      "before",
+      "beforeEach",
+      "it",
+      "xit"
+    ],
+    "ignore": [
+      "node_modules/**",
+      "tmp/**"
+    ]
+  }
+}
