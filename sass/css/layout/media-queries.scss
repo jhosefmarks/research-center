@@ -1,0 +1,26 @@
+@media #{$mq-mobile} {
+	.menu-principal {
+		position: static;
+		display: block;
+		text-align: center;
+	}
+
+	.menu-principal li {
+		margin: .4em;
+	}
+
+	.destaque {
+		font-size: 14px;
+		height: 250px;
+	}
+
+	.menu-principal,
+	.menu-principal li,
+	.post-destaque,
+	.posts-antigos,
+	form {
+		width: auto;
+	}
+
+
+}
