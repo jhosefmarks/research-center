@@ -1,0 +1,100 @@
+/** Footer **/
+footer {
+  display: block;
+  position: relative;
+
+  a {
+    color: @cor-branco;
+    text-decoration: none;
+  }
+
+  &::after {
+    content: "";
+    background: url(../imagens/fundo-rodape.png);
+    opacity: .02;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
+
+  &::before {
+    content: "";
+    background: @cor-auxiliar;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .container {
+    padding-top: @tamanho-fonte-html * 3px;
+    height: @tamanho-fonte-html * 6.5px;
+    position: relative;
+
+    img {
+      width: 250px;
+    }
+  }
+}
+
+.menu-rodape,
+.social {
+  position: absolute;
+}
+
+.menu-rodape {
+  top: 1em;
+  right: 0;
+
+  ul {
+    li {
+      display: inline-block;
+      margin-left: 2em;
+    }
+  }
+}
+
+.social {
+  bottom: 0;
+  right: 0;
+
+  li {
+    float: left;
+
+    a {
+      display: block;
+      width: 55px;
+      height: 55px;
+      .image-replacement;
+      margin-left: 1em;
+    }
+  }
+
+  a {
+    background-position: top;
+    background-size: 50px 50px;
+
+    &[href*="facebook"] {
+      background-image: url(../imagens/facebook.png);
+    }
+
+    &[href*="twitter"] {
+      background-image: url(../imagens/twitter.png);
+    }
+
+    &[href*="instagram"] {
+      background-image: url(../imagens/instagram.png);
+    }
+  }
+
+}
+
+.menu-rodape li,
+.social li {
+  display: inline;
+}
