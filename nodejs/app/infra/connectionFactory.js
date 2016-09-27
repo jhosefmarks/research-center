@@ -4,7 +4,6 @@ let mysql = require('mysql')
 
 function createDBConnection () {
   if (!process.env.NODE_ENV || process.env.NODE_ENV === 'dev') {
-    console.log('dev')
     return mysql.createConnection({
       host: 'localhost',
       user: 'root',
