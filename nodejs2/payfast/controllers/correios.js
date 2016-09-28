@@ -1,3 +1,5 @@
+let logger = require('../servicos/logger.js')
+
 module.exports = app => {
   app.post('/correios/calculo-prazo', (req, res) => {
     let dadosDaEntrega = req.body
@@ -10,7 +12,7 @@ module.exports = app => {
         return
       }
 
-      console.log('prazo calculado')
+      logger.info('prazo calculado')
       res.json(resultado)
     })
   })

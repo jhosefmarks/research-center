@@ -1,13 +1,47 @@
 'use strict'
 
+let logger = require('../servicos/logger.js')
+
 const PAGAMENTO_CRIADO = 'CRIADO'
 const PAGAMENTO_CONFIRMADO = 'CONFIRMADO'
 const PAGAMENTO_CANCELADO = 'CANCELADO'
 
 module.exports = app => {
   app.get('/pagamentos', (req, res) => {
-    console.log('Recebida requisicao de teste na porta 3000.')
+    logger.info('Recebida requisicao de teste na porta 3000.')
     res.send('OK.')
+  })
+
+  app.get('/pagamentos/pagamento/:id', (req, res) => {
+    let id = req.params.id
+    logger.info('consultando pagamento: ' + id)
+
+    let memcachedClient = app.servicos.menCachedClient()
+
+    memcachedClient.get('pagamento-' + id, (errom, retorno) => {
+      if (errom || !retorno) {
+        logger.info('MISS - chave nao encontrada')
+
+        let connection = app.persistencia.connectionFactory()
+        let PagamentoDao = new app.persistencia.PagamentoDao(connection)
+
+        PagamentoDao.buscaPorId(id, (erro, resultado) => {
+          if (erro) {
+            logger.info('erro ao consultar no banco: ' + erro)
+            res.status(500).send(erro)
+            return
+          }
+          logger.info('pagamento encontrado: ' + JSON.stringify(resultado))
+          res.status(200).json(resultado)
+          return
+        })
+        // HIT no cache
+      } else {
+        logger.info('HIT - valor: ' + JSON.stringify(retorno))
+        res.status(200).json(retorno)
+        return
+      }
+    })
   })
 
   app.delete('/pagamentos/pagamento/:id', (req, res) => {
@@ -25,7 +59,7 @@ module.exports = app => {
         res.status(500).send(erro)
         return
       }
-      console.log('pagamento cancelado: ', pagamento)
+      logger.info('pagamento cancelado: ', pagamento)
       res.status(204).json(pagamento)
     })
   })
@@ -46,7 +80,7 @@ module.exports = app => {
         return
       }
 
-      console.log('pagamento confirmado: ', pagamento)
+      logger.info('pagamento confirmado: ', pagamento)
 
       pagamento.link = [{
         rel: 'consultar',
@@ -69,7 +103,7 @@ module.exports = app => {
     let errors = req.validationErrors()
 
     if (errors) {
-      console.log('Erros de validação encontrados')
+      logger.info('Erros de validação encontrados')
       res.status(400).send(errors)
       return
     }
@@ -82,10 +116,18 @@ module.exports = app => {
 
     pagamentoDao.salva(pagamento, (erro, resultado) => {
       if (erro) {
-        console.log('Erro ao inserir no banco: ', erro)
+        logger.info('Erro ao inserir no banco: ', erro)
         res.status(500).send(erro)
         return
       }
+
+      pagamento.id = resultado.insertId
+
+      let memcachedClient = app.servicos.menCachedClient()
+
+      memcachedClient.set('pagamento-' + pagamento.id, pagamento, 100000, (errm) => {
+        logger.info('nova chave: pagamento-' + pagamento.id)
+      })
 
       if (pagamento.forma_de_pagamento === 'cartao') {
         let cartao = req.body.cartao
@@ -93,7 +135,7 @@ module.exports = app => {
 
         clienteCartoes.autoriza(cartao, (exception, request, response, retorno) => {
           if (exception) {
-            console.log(exception)
+            logger.info(exception)
             res.status(400).send(exception)
             return
           }
@@ -118,8 +160,6 @@ module.exports = app => {
           res.status(201).json(response)
         })
       } else {
-        pagamento.id = resultado.insertId
-
         let response = {
           dados_pagamento: pagamento,
           links: [{
@@ -133,7 +173,7 @@ module.exports = app => {
           }]
         }
 
-        res.location('/pagamentos/pagamento/' + resultado.insertId)
+        res.location('/pagamentos/pagamento/' + pagamento.id)
 
         res.status(201).json(response)
       }
