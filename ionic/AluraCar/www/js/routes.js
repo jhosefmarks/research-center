@@ -1,8 +1,10 @@
 angular.module('starter')
 .config(function ($httpProvider, $stateProvider, $urlRouterProvider) {
 
-  $httpProvider.defaults.useXDomain = true;
-  delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  $httpProvider.defaults.headers.common = {};
+  $httpProvider.defaults.headers.post = {};
+  $httpProvider.defaults.headers.put = {};
+  $httpProvider.defaults.headers.patch = {};
 
   $stateProvider.state('listagem', {
     url: '/listagem',
