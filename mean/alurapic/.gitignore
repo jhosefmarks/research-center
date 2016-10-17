@@ -1,5 +1,6 @@
 .tmp
 .DS_Store
 .DS_Store?
+.vscode/
 node_modules/
 .dpl/
