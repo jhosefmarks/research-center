@@ -1,22 +1,65 @@
 'use strict'
 
-let api = {}
+let mongoose = require('mongoose')
 
-let fotos = [
-  {_id: 1, titulo: 'Leão', url: 'http://www.fundosanimais.com/Minis/leoes.jpg'},
-  {_id: 2, titulo: 'Leão 2', url: 'http://www.fundosanimais.com/Minis/leoes.jpg'}
-]
+module.exports = function(app) {
+  let api = {};
 
-api.lista = (req, res) => {
-  res.json(fotos)
+  // solicitando o modelo 'Foto'
+  let model = mongoose.model('Foto')
+
+  api.lista = (req, res) => {
+    model.find()
+      .then(fotos => {
+        res.json(fotos)
+      }, error => {
+        console.log(error)
+        res.sendStatus(500)
+      })
+  }
+
+  api.buscaPorId = (req, res) => {
+    model.findById(req.params.id)
+      .then(foto => {
+        if (!foto) {
+          throw new Error('Foto não encontrada')
+        }
+        res.json(foto)
+      }, error => {
+        console.log(error)
+        res.sendStatus(500)
+      })
+  }
+
+  api.removePorId = (req, res) => {
+    model.remove({'_id': req.params.id})
+      .then(() => {
+        res.sendStatus(200)
+      }, error => {
+        console.log(error)
+        res.sendStatus(500)
+      })
+  }
+
+  api.adiciona = (req, res) => {
+    model.create(req.body)
+      .then(foto => {
+        res.json(foto)
+      }, error => {
+        console.log(error)
+        res.sendStatus(500)
+      })
+  }
+
+  api.atualiza = (req, res) => {
+    model.findByIdAndUpdate(req.params.id, req.body)
+      .then(foto => {
+        res.json(foto)
+      }, error => {
+        console.log(error)
+        res.sendStatus(500)
+      })
+  }
+
+  return api
 }
-
-api.buscaPorId = (req, res) => {
-  let foto = fotos.find((foto) => {
-    return foto._id === parseInt(req.params.id)
-  })
-
-  res.json(foto)
-}
-
-module.exports = api
