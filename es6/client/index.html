@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <script src="js/app/polyfill/es6.js"></script>
     
 </head>
@@ -37,9 +39,9 @@
     </form>
     
     <div class="text-center">
-        <button class="btn btn-primary text-center" type="button" onclick="negociacaoController.importaNegociacoes()">
+        <!--button class="btn btn-primary text-center" type="button" onclick="negociacaoController.importaNegociacoes()">
             Importar Negociações
-        </button>
+        </button-->
         <button class="btn btn-primary text-center" type="button" onclick="negociacaoController.apaga()">
             Apagar
         </button>
@@ -65,6 +67,8 @@
     <script src="js/app/services/ProxyFactory.js"></script>
     <script src="js/app/services/HttpService.js"></script>
     <script src="js/app/services/NegociacaoService.js"></script>
+    <script src="js/app/services/ConnectionFactory.js"></script>
+    <script src="js/app/dao/NegociacaoDao.js"></script>
 
     <script>
         var negociacaoController = new NegociacaoController();

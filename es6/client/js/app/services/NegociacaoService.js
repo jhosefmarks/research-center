@@ -44,4 +44,54 @@ class NegociacaoService {
             throw new Error('Não foi possível obter as negociações')
         });
     }
+
+    cadastra (negociacao) {
+        return ConnectionFactory
+            .getConnection()
+            .then(conexao => new NegociacaoDao(conexao))
+            .then(dao => dao.adiciona(negociacao))
+            .then(() => 'Negociação cadastrada com sucesso')
+            .catch(erro => {
+                throw new Error("Não foi possível adicionar a negociação")
+            })
+    }
+
+    lista () {
+        return ConnectionFactory
+            .getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.listaTodos())
+            .catch(erro => {
+                console.log(erro)
+                throw new Error('Não foi possível obter as negociações')
+            })
+    }
+
+    apagaTodas() {
+        return ConnectionFactory
+            .getConnection()
+            .then(connection => new NegociacaoDao(connection))
+            .then(dao => dao.apagaTodos())
+            .catch(erro => {
+                console.log(erro)
+                throw new Error('Não foi possível obter as negociações')
+            })
+    }
+
+    importa (listaAtual) {
+        return this
+            .obterNegociacoes()
+            .then(negociacoes => 
+                negociacoes.filter(negociacao =>
+                    !listaAtual.some(negociacaoExistente => 
+                        JSON.stringify(negociacao) == JSON.stringify(negociacaoExistente)
+                    )
+                )
+            )
+            .catch(erro => {
+                console.log(erro)
+                throw new Error("Não foi possível importas as negociaçoes")
+            })
+    }
+
 }
