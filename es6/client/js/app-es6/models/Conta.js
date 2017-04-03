@@ -1,7 +1,5 @@
-class Conta {
-
+export class Conta {
     constructor(titular, conta) {
-
         this._titular = titular;
         this._conta = conta;
         this._saldo = 0.0
@@ -9,7 +7,7 @@ class Conta {
 
     deposita(valor) {
         console.log('Valor depositado: ' + valor);
-        this._saldo+=valor; 
+        this._saldo+=valor;
     }
 
     get saldo() {

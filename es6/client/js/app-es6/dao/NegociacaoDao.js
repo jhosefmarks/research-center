@@ -1,5 +1,6 @@
-class NegociacaoDao {
+import {Negociacao} from '../models/Negociacao.js'
 
+export class NegociacaoDao {
     constructor (connection) {
         this._connection = connection
         this._store = 'negociacoes'
@@ -51,7 +52,6 @@ class NegociacaoDao {
 
     apagaTodos() {
         return new Promise((resolve, reject) => {
-
             let request = this._connection
                 .transaction([this._store], 'readwrite')
                 .objectStore(this._store)
