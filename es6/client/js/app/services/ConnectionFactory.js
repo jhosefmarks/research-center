@@ -9,7 +9,7 @@ var ConnectionFactory = (function () {
     let close = null
 
     return  class ConnectionFactory {
-       
+
         constructor () {
 
             throw new Error("ConnectionFactory não pode ser instanciada")
@@ -18,7 +18,7 @@ var ConnectionFactory = (function () {
         static getConnection () {
 
             return new Promise((resolve, reject) => {
-                let openRequest = window.indexedDB.open(dbName,version)
+                let openRequest = window.indexedDB.open(dbName, version)
 
                 openRequest.onupgradeneeded = e => {
                     ConnectionFactory._createStores(e.target.result)

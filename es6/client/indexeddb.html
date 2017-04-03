@@ -40,18 +40,18 @@
 
         function adiciona() {
 
-            let transaction = connection.transaction(['negociacoes'], 'readwrite');
+            let transaction = connection.transaction(['negociacoes'], 'readwrite')
 
-            let store = transaction.objectStore('negociacoes');
+            let store = transaction.objectStore('negociacoes')
 
             // instanciando uma negociação
-            let negociacao = new Negociacao(new Date(), 200, 1);
+            let negociacao = new Negociacao(new Date(), 200, 1)
 
-            let request = store.add(negociacao);
+            let request = store.add(negociacao)
 
-            request.onsuccess = e => console.log('Negociação incluída com sucesso');
+            request.onsuccess = e => console.log('Negociação incluída com sucesso')
 
-            request.onerror = e => console.log(e.target.error);            
+            request.onerror = e => console.log(e.target.error)
         }
 
         function listaTodos() {
@@ -74,7 +74,7 @@
 
                      atual.continue()
 
-                 } else { 
+                 } else {
 
                      console.log(negociacoes)
                  }
@@ -86,6 +86,6 @@
         }
 
     </script>
-    
+
 </body>
 </html>
