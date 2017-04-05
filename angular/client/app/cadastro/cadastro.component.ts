@@ -1,6 +1,8 @@
 import { Component } from '@angular/core'
-import { Http, Headers } from '@angular/http'
-import { FotoComponent} from '../foto/foto.component'
+import { ActivatedRoute, Router } from '@angular/router'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FotoComponent } from '../foto/foto.component'
+import { FotoService } from '../foto/foto.service'
 
 @Component({
     moduleId: module.id,
@@ -8,23 +10,50 @@ import { FotoComponent} from '../foto/foto.component'
     templateUrl: './cadastro.component.html'
 })
 export class CadastroComponent {
+    route: ActivatedRoute
+    router: Router
+    service: FotoService
     foto: FotoComponent = new FotoComponent ()
-    http: Http
+    meuForm: FormGroup
+    mensagem: string = ''
 
+    constructor (service: FotoService, fb: FormBuilder, route: ActivatedRoute, router: Router) {
+        this.route = route
+        this.router = router
+        this.service = service
 
-    constructor (http: Http) {
-        this.http = http
+        this.meuForm = fb.group({
+            titulo: ['', Validators.compose([
+                Validators.required, Validators.minLength(4)
+            ])],
+            url: ['', Validators.required],
+            descricao: ['']
+        })
+
+        this.route.params.subscribe(params => {
+            let id = params['id']
+
+            if (id) {
+                this.service
+                    .buscarPorId(id)
+                    .subscribe(foto => this.foto = foto, err => console.log(err))
+            }
+        })
     }
 
     cadastrar (event) {
-        let headers = new Headers()
-
         event.preventDefault()
 
-        headers.append('Content-type', 'application/json')
+        this.service
+            .cadastra(this.foto)
+            .subscribe(res => {
+                this.mensagem = res.mensagem
+                this.foto = new FotoComponent()
 
-        this.http
-            .post('v1/fotos', JSON.stringify(this.foto), {headers})
-            .subscribe(() => this.foto = new FotoComponent())
+                if (!res.inclusao) {
+                    this.router.navigate([''])
+                }
+            },
+            err => console.log(err))
     }
 }

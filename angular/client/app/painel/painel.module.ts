@@ -5,6 +5,4 @@ import { PainelComponent} from './painel.component'
     declarations: [ PainelComponent ],
     exports: [ PainelComponent ]
 })
-export class PainelModule {
-
-}
+export class PainelModule {}
