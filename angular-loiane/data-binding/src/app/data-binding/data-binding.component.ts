@@ -23,4 +23,12 @@ export class DataBindingComponent implements OnInit {
   getCurtirCurso () {
     return true;
   }
+
+  botaoClicado () {
+    alert('Botão clicado!')
+  }
+
+  onKeyUp (event) {
+    alert("sei lá")
+  }
 }
