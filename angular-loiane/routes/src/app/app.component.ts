@@ -1,14 +1,14 @@
 import { Subscription } from 'rxjs/Rx';
 import { AuthService } from './login/auth.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  mostrarMenu: boolean = false;
+export class AppComponent implements OnInit {
+  mostrarMenu = false;
 
   constructor(
     private authService: AuthService
@@ -17,6 +17,6 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.authService.mostrarMenuEmitter.subscribe(mostrar => this.mostrarMenu = mostrar)
+    this.authService.mostrarMenuEmitter.subscribe(mostrar => this.mostrarMenu = mostrar);
   }
 }

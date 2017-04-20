@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   }
 
   fazerLogin() {
-    this._auth.fazerLogin(this.usuario)
+    this._auth.fazerLogin(this.usuario);
   }
 
 }

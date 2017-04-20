@@ -4,10 +4,10 @@ import { Injectable } from '@angular/core';
 export class CursosService {
 
   private _cursos: any = [
-      {id: 1, nome: 'JavaScript'},
-      {id: 2, nome: 'Angular v4'},
-      {id: 3, nome: 'TypeScript'}
-    ]
+    {id: 1, nome: 'JavaScript'},
+    {id: 2, nome: 'Angular v4'},
+    {id: 3, nome: 'TypeScript'}
+  ];
 
   constructor() { }
 
@@ -16,7 +16,7 @@ export class CursosService {
   }
 
   getCurso(id: number) {
-    return this._cursos.find(curso => curso.id === id)
+    return this._cursos.find(curso => curso.id === id);
   }
 
 }
