@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
+
+import 'rxjs/add/operator/map';
 
 @Component({
   selector: 'app-template-form',
@@ -12,15 +15,15 @@ export class TemplateFormComponent implements OnInit {
     email: null // 'jhosef@marks.com'
   };
 
-  constructor() { }
+  constructor(private http: Http) { }
 
   ngOnInit() {
   }
 
   onSubmit(form) {
-    console.log('Form: ', form.value);
-
-    console.log('Objeto: ', this.usuario);
+    this.http.post('https://httpbin.org/post', JSON.stringify(form.value))
+      .map(res => res)
+      .subscribe(dados => console.log(dados));
   }
 
   verificaValidTouched(campo) {
@@ -32,6 +35,61 @@ export class TemplateFormComponent implements OnInit {
       'has-error': this.verificaValidTouched(campo),
       'has-feedback': this.verificaValidTouched(campo)
     }
+  }
+
+  consultaCEP(cep, form) {
+    cep = cep.replace(/\D/g, '');
+
+    if (cep !== '') {
+      let validacep = /^[0-9]{8}$/;
+
+      if (validacep.test(cep)) {
+        this.resetaDadosForm(form);
+
+        this.http.get(`//viacep.com.br/ws/${cep}/json`)
+          .map(dados => dados.json())
+          .subscribe(dados => this.populaDadosForm(dados, form));
+      }
+    }
+  }
+
+  populaDadosForm(dados, formulario){
+    /*formulario.setValue({
+      nome: formulario.value.nome,
+      email: formulario.value.email,
+      endereco: {
+        rua: dados.logradouro,
+        cep: dados.cep,
+        numero: '',
+        complemento: dados.complemento,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });*/
+
+    formulario.form.patchValue({
+      endereco: {
+        rua: dados.logradouro,
+        //cep: dados.cep,
+        complemento: dados.complemento,
+        bairro: dados.bairro,
+        cidade: dados.localidade,
+        estado: dados.uf
+      }
+    });
+  }
+
+  resetaDadosForm(formulario){
+    formulario.form.patchValue({
+      endereco: {
+        rua: null,
+        complemento: null,
+        bairro: null,
+        cidade: null,
+        estado: null
+      }
+    });
   }
 
 }
