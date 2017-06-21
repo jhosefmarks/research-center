@@ -1,0 +1,26 @@
+# Install
+
+brew cask install virtualbox
+brew install docker docker-machine
+
+# create the vm
+docker-machine create -d virtualbox dev
+
+# import environment variables for the docker-cli
+eval "$(docker-machine env dev)"
+
+docker run hello-world
+
+# for stop and remove containers
+
+docker stop $(docker ps -aq)
+docker rm $(docker ps -aq)
+
+# download images
+
+docker pull mysql
+
+# run containers
+
+docker run --name database -e MYSQL_ROOT_PASSWORD=master -d mysql
+docker run --name blog-alura --link database:mysql -e WORDPRESS_DB_PASSWORD=master -p 80:80 -d wordpress

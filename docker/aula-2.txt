@@ -1,0 +1,5 @@
+# access container
+
+docker exec -i -t ubuntu bash
+
+docker run -it ubuntu bash
