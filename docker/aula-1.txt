@@ -24,3 +24,6 @@ docker pull mysql
 
 docker run --name database -e MYSQL_ROOT_PASSWORD=master -d mysql
 docker run --name blog-alura --link database:mysql -e WORDPRESS_DB_PASSWORD=master -p 80:80 -d wordpress
+
+
+docker run -it --rm --name my-running-script -v "$PWD":/usr/src/app -w /usr/src/app node node your-daemon-or-script.js

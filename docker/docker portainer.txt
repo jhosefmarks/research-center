@@ -1,0 +1,5 @@
+docker run --name portainer -d -p 9000:9000 -v '/var/run/docker.sock:/var/run/docker.sock' portainer/portainer
+
+http://192.168.99.100:9000
+
+docker run --name database -v /Users/jhosef/Projects/alura/docker/database:/var/lib/mysql -u 1000 -e MYSQL_ROOT_PASSWORD=master -d mysql
