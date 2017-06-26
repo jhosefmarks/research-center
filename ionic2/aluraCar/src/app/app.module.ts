@@ -1,12 +1,22 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
+
+import { AgendamentoService } from './../domain/agendamento/agendamento-service';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { EscolhaPage } from './../pages/escolha/escolha';
+import { CadastroPage } from './../pages/cadastro/cadastro';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    EscolhaPage,
+    CadastroPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -14,8 +24,12 @@ import { HomePage } from '../pages/home/home';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    EscolhaPage,
+    CadastroPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AgendamentoService]
 })
 export class AppModule {}
